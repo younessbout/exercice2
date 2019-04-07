@@ -1,10 +1,14 @@
 package com.nexio.exercice.posts.comments;
 
+import com.nexio.exercice.exceptions.FunctionalException;
 import com.nexio.exercice.posts.comments.adapters.PostCommentAddVO;
 import com.nexio.exercice.posts.comments.adapters.PostCommentRepresentation;
+import com.nexio.exercice.posts.comments.adapters.PostCommentUpdateVO;
+import com.nexio.exercice.posts.comments.exceptions.PostCommentNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,7 +27,7 @@ public class PostCommentsServiceImpl implements PostCommentsService {
     @Override
     public PostCommentRepresentation addNewPostComment(PostCommentAddVO postCommentAddVO) {
 
-        PostComment postComment = postCommentRepresentationAdapter.adapt(postCommentAddVO);
+        PostComment postComment = postCommentRepresentationAdapter.adaptPostCommentAddVO(postCommentAddVO);
 
         postComment = postCommentsProvider.addOrUpdatePostComment(postComment);
 
@@ -37,5 +41,14 @@ public class PostCommentsServiceImpl implements PostCommentsService {
         return postCommentRepresentationAdapter.adapt(comments);
     }
 
+    @Override
+    public PostCommentRepresentation updatePostComment(PostCommentUpdateVO postCommentUpdateVO) throws FunctionalException {
 
+        PostComment postComment = postCommentsProvider.getPostCommentById(postCommentUpdateVO.getPostCommentId()).orElseThrow(() -> new PostCommentNotFoundException());
+
+        postComment.setBody(postCommentUpdateVO.getBody());
+        postComment.setUpdateDate(LocalDateTime.now());
+
+        return postCommentRepresentationAdapter.adapt(postComment);
+    }
 }

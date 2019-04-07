@@ -2,6 +2,7 @@ package com.nexio.exercice.posts.comments;
 
 import com.nexio.exercice.posts.comments.adapters.PostCommentAddVO;
 import com.nexio.exercice.posts.comments.adapters.PostCommentRepresentation;
+import com.nexio.exercice.posts.comments.adapters.PostCommentUpdateVO;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ class PostCommentRepresentationAdapter {
         return postCommentRepresentation;
     }
 
-    public PostComment adapt(final PostCommentAddVO postCommentAddVO) {
+    public PostComment adaptPostCommentAddVO(final PostCommentAddVO postCommentAddVO) {
         PostComment postComment = new PostComment();
 
         postComment.setBody(postCommentAddVO.getBody());

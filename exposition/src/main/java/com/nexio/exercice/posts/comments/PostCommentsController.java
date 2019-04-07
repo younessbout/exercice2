@@ -1,10 +1,7 @@
 package com.nexio.exercice.posts.comments;
 
 import com.nexio.exercice.constants.ResourcePaths;
-import com.nexio.exercice.posts.comments.adapters.PostCommentAddRequest;
-import com.nexio.exercice.posts.comments.adapters.PostCommentAddVO;
-import com.nexio.exercice.posts.comments.adapters.PostCommentDtoAdapter;
-import com.nexio.exercice.posts.comments.adapters.PostCommentRepresentation;
+import com.nexio.exercice.posts.comments.adapters.*;
 import com.nexio.exercice.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +35,7 @@ public class PostCommentsController {
 
         LOGGER.debug("REST request add new Post Comment for <Post ID> : <{}>. <Comment> : <{}> ", postId, comment);
 
-        PostCommentAddVO postCommentAddVO = postCommentDtoAdapter.adapt(comment, postId);
+        PostCommentAddVO postCommentAddVO = postCommentDtoAdapter.adaptPostCommentAddRequest(comment, postId);
         PostCommentRepresentation postCommentRepresentation = postCommentsService.addNewPostComment(postCommentAddVO);
 
         return ResponseEntity.created(new URI(Utils.constructUrlWithParams(ENDPOINT_API_POST_COMMENTS_ONE_COMMENT, postId.toString(), postCommentRepresentation.getId().toString()))).
@@ -53,5 +50,17 @@ public class PostCommentsController {
         List<PostCommentRepresentation> comments = postCommentsService.getPostCommentsForPost(postId);
 
         return ResponseEntity.ok(comments);
+    }
+
+    @PutMapping(path = ResourcePaths.POSTS.COMMENTS.ENDPOINT_API_POST_COMMENTS_ONE_COMMENT)
+    public ResponseEntity<PostCommentRepresentation> updateCommentToPost(@PathVariable("post_id") Long postId, @PathVariable("comment_id") Long postCommentId,
+                                                                         @Validated @RequestBody PostCommentUpdateRequest comment) throws Exception {
+
+        LOGGER.debug("REST request Update Post Comment for <Post ID, Comment Id> : <{}, {}>. <Comment> : <{}> ", postId, postCommentId, comment);
+
+        PostCommentUpdateVO postCommentUpdateVO = postCommentDtoAdapter.adaptPostCommentUpdateRequest(comment, postCommentId);
+        PostCommentRepresentation postCommentRepresentation = postCommentsService.updatePostComment(postCommentUpdateVO);
+
+        return ResponseEntity.ok(postCommentRepresentation);
     }
 }
