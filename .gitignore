@@ -1,0 +1,11 @@
+infra/target
+exposition/target
+domain/target
+application/target
+
+logs
+
+.idea
+*.iws
+*.iml
+*.ipr
