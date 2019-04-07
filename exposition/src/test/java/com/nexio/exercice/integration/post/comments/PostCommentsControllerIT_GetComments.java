@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(secure = false)
 @ActiveProfiles("test")
 @Transactional
+@Rollback
 public class PostCommentsControllerIT_GetComments {
 
     @Autowired
@@ -38,7 +40,7 @@ public class PostCommentsControllerIT_GetComments {
     public void test_comments_for_post_successful() throws Exception {
 
         final Long postId = 1L;
-        final int numberOfCommentsForPostWithId_1 = 2;
+        final int numberOfCommentsForPostWithId_1 = 3;
 
         ResultActions getActionMetaResult = mvc.perform(
                 get(ResourcePaths.POSTS.COMMENTS.ENDPOINT_API_POST_COMMENTS, postId)

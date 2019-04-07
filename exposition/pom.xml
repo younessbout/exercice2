@@ -11,6 +11,11 @@
 
     <artifactId>exercice.post.comments.exposition</artifactId>
 
+
+    <properties>
+        <start-class>com.nexio.exercice.Application</start-class>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
