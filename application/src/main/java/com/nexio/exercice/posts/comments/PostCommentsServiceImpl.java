@@ -51,4 +51,11 @@ public class PostCommentsServiceImpl implements PostCommentsService {
 
         return postCommentRepresentationAdapter.adapt(postComment);
     }
+
+    @Override
+    public void deletePostComment(Long postCommentId) throws FunctionalException {
+        PostComment postComment = postCommentsProvider.getPostCommentById(postCommentId).orElseThrow(() -> new PostCommentNotFoundException());
+
+        postCommentsProvider.deletePostComment(postCommentId);
+    }
 }

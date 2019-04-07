@@ -14,4 +14,6 @@ public interface PostCommentsService {
     List<PostCommentRepresentation> getPostCommentsForPost(final Long postId);
 
     PostCommentRepresentation updatePostComment(final PostCommentUpdateVO postCommentUpdateVO) throws FunctionalException;
+
+    void deletePostComment(Long postCommentId)  throws FunctionalException;
 }

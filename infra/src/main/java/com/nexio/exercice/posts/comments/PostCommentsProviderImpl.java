@@ -32,5 +32,10 @@ public class PostCommentsProviderImpl implements PostCommentsProvider {
         return postCommentsRepository.findByPostId(postId);
     }
 
+    @Override
+    public void deletePostComment(Long postCommentId) {
+        postCommentsRepository.deleteById(postCommentId);
+    }
+
 
 }

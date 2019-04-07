@@ -63,4 +63,14 @@ public class PostCommentsController {
 
         return ResponseEntity.ok(postCommentRepresentation);
     }
+
+    @DeleteMapping(path = ResourcePaths.POSTS.COMMENTS.ENDPOINT_API_POST_COMMENTS_ONE_COMMENT)
+    public ResponseEntity deleteCommentToPost(@PathVariable("post_id") Long postId, @PathVariable("comment_id") Long postCommentId) throws Exception {
+
+        LOGGER.debug("REST request Delete Post Comment for <Post ID, Comment Id> : <{}, {}>.", postId, postCommentId);
+
+        postCommentsService.deletePostComment(postCommentId);
+
+        return ResponseEntity.ok().build();
+    }
 }

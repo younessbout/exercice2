@@ -9,5 +9,7 @@ public interface PostCommentsProvider {
 
     PostComment addOrUpdatePostComment(final PostComment postComment);
 
-    List<PostComment> getPostCommentsForPost(Long postId);
+    List<PostComment> getPostCommentsForPost(final Long postId);
+
+    void deletePostComment(final Long postCommentId);
 }
