@@ -1,16 +1,19 @@
 package com.nexio.exercice.posts.comments;
 
-import com.nexio.exercice.posts.comments.PostComment;
 import com.nexio.exercice.posts.comments.adapters.PostCommentAddVO;
 import com.nexio.exercice.posts.comments.adapters.PostCommentRepresentation;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 class PostCommentRepresentationAdapter {
 
-    public PostCommentRepresentation adapt(final PostComment postComment){
+    public PostCommentRepresentation adapt(final PostComment postComment) {
         PostCommentRepresentation postCommentRepresentation = new PostCommentRepresentation();
 
         postCommentRepresentation.setAuthor(postComment.getAuthor());
@@ -23,7 +26,7 @@ class PostCommentRepresentationAdapter {
         return postCommentRepresentation;
     }
 
-    public PostComment adapt(final PostCommentAddVO postCommentAddVO){
+    public PostComment adapt(final PostCommentAddVO postCommentAddVO) {
         PostComment postComment = new PostComment();
 
         postComment.setBody(postCommentAddVO.getBody());
@@ -33,5 +36,12 @@ class PostCommentRepresentationAdapter {
         postComment.setPostId(postCommentAddVO.getPostId());
 
         return postComment;
+    }
+
+    public List<PostCommentRepresentation> adapt(List<PostComment> comments) {
+        return Optional.of(comments).orElse(Collections.emptyList())
+                .stream()
+                .map(this::adapt)
+                .collect(Collectors.toList());
     }
 }

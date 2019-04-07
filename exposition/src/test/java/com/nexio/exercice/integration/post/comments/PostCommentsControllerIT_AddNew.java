@@ -1,4 +1,4 @@
-package com.nexio.exercice.integration;
+package com.nexio.exercice.integration.post.comments;
 
 import com.jayway.jsonpath.JsonPath;
 import com.nexio.exercice.Application;
@@ -15,9 +15,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -30,7 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc(secure = false)
-public class PostCommentsControllerIT {
+@ActiveProfiles("test")
+@Transactional
+public class PostCommentsControllerIT_AddNew {
 
     @Autowired
     private PostCommentsProvider postCommentsProvider;
@@ -54,7 +58,7 @@ public class PostCommentsControllerIT {
         postActionMetaResult.andExpect(status().is(HttpStatus.CREATED.value()));
 
         String response = postActionMetaResult.andReturn().getResponse().getContentAsString();
-        
+
         //Check the Comment is created in the database
         Long commentId = Long.valueOf(JsonPath.parse(response).read("$.id").toString());
         Optional<PostComment> postComment = postCommentsProvider.getPostCommentById(commentId);

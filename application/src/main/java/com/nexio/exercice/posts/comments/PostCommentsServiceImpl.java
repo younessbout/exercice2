@@ -3,8 +3,12 @@ package com.nexio.exercice.posts.comments;
 import com.nexio.exercice.posts.comments.adapters.PostCommentAddVO;
 import com.nexio.exercice.posts.comments.adapters.PostCommentRepresentation;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
+@Transactional
 public class PostCommentsServiceImpl implements PostCommentsService {
 
     private PostCommentRepresentationAdapter postCommentRepresentationAdapter;
@@ -25,4 +29,13 @@ public class PostCommentsServiceImpl implements PostCommentsService {
 
         return postCommentRepresentationAdapter.adapt(postComment);
     }
+
+    @Override
+    public List<PostCommentRepresentation> getPostCommentsForPost(Long postId) {
+        List<PostComment> comments = postCommentsProvider.getPostCommentsForPost(postId);
+
+        return postCommentRepresentationAdapter.adapt(comments);
+    }
+
+
 }
