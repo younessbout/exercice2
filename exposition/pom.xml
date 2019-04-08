@@ -39,17 +39,13 @@
 
         <dependency>
             <groupId>com.nexio</groupId>
-            <artifactId>exercice.post.comments.domain</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.nexio</groupId>
             <artifactId>exercice.post.comments.application</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.nexio</groupId>
             <artifactId>exercice.post.comments.infra</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
